@@ -26,5 +26,8 @@
     "mochawesome-report-generator": "^6.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
