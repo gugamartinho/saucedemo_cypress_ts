@@ -9,9 +9,10 @@
     "report:merge": "mochawesome-merge cypress/reports/mochawesome*.json > cypress/reports/report.json",
     "report:generate": "marge cypress/reports/report.json --reportDir cypress/reports/html",
     "report": "npm run report:merge && npm run report:generate",
-    "cy:login": "npm run clean:reports && cypress run --spec 'cypress/e2e/login/*' || true && npm run report",
-    "cy:inventory": "npm run clean:reports && cypress run --spec 'cypress/e2e/inventory/*' || true && npm run report",
-    "cy:product-details": "npm run clean:reports && cypress run --spec 'cypress/e2e/product-details/*' || true && npm run report"
+    "cy:login": "npm run clean:reports && cypress run --spec 'cypress/e2e/login/*' && npm run report",
+    "cy:inventory": "npm run clean:reports && cypress run --spec 'cypress/e2e/inventory/*' && npm run report",
+    "cy:product-details": "npm run clean:reports && cypress run --spec 'cypress/e2e/product-details/*' && npm run report",
+    "cy:ci": "npm run cy:run || true && npm run report:merge && npm run report:generate"
   },
   "keywords": [],
   "author": "",

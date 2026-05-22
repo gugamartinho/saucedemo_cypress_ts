@@ -26,17 +26,19 @@ jobs:
         run: npm install
 
       - name: Run Cypress tests (headless)
-        run: npm run cy:run
+        run: npm run cy:ci
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           VALID_USERNAME: ${{ secrets.VALID_USERNAME }}
           VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
           LOCKED_OUT_USERNAME: ${{ secrets.LOCKED_OUT_USERNAME }}
 
+      - name: Generate Mochawesome HTML report
+        run: npm run report:generate
+
       - name: Upload Mochawesome HTML report
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: mochawesome-report
           path: cypress/reports/html
-          retention-days: 30
+
