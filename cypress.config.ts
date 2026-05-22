@@ -11,13 +11,14 @@ export default defineConfig({
     html: false,
     json: true,
     video: false,
-    screenshotOnRunFailure: true
+    screenshotOnRunFailure: true,
   },
   e2e: {
     baseUrl: process.env.BASE_URL,
     env: {
       VALID_USERNAME: process.env.VALID_USERNAME,
-      VALID_PASSWORD: process.env.VALID_PASSWORD
+      VALID_PASSWORD: process.env.VALID_PASSWORD,
+      LOCKED_OUT_USERNAME: process.env.LOCKED_OUT_USERNAME
     },
     setupNodeEvents(on, config) {
       // event listeners
