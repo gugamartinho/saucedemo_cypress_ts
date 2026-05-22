@@ -7,7 +7,7 @@ describe('Inventory Tests', () => {
 
     beforeEach(() => {
         loginPage.visit();
-        loginPage.login('standard_user', 'secret_sauce');
+        loginPage.login(Cypress.env('VALID_USERNAME'), Cypress.env('VALID_PASSWORD'));
     });
 
     it('should display the inventory page after successful login', () => {
