@@ -30,7 +30,7 @@ describe('Login Tests', () => {
     });
 
     it('should display an error message with locked user', () => {
-        loginPage.login('locked_out_user', Cypress.env('VALID_PASSWORD'));
+        loginPage.login(Cypress.env('LOCKED_OUT_USERNAME'), Cypress.env('VALID_PASSWORD'));
         loginPage.assertErrorMessage('Epic sadface: Sorry, this user has been locked out.');
     });
 });

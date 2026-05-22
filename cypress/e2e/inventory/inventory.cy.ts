@@ -37,4 +37,24 @@ describe('Inventory Tests', () => {
         inventoryPage.assertProductPriceByIndex(4, '$7.99');
         inventoryPage.assertProductPriceByIndex(5, '$15.99');
     });
+
+    it('should sort products correctly by name A-Z', () => {
+        inventoryPage.sortProductsBy('az');
+        inventoryPage.checkProductsSortedCorrectly('az');
+    });
+
+    it('should sort products correctly by name Z-A', () => {
+        inventoryPage.sortProductsBy('za');
+        inventoryPage.checkProductsSortedCorrectly('za');
+    });
+
+    it('should sort products correctly by price Low to High', () => {
+        inventoryPage.sortProductsBy('lohi');
+        inventoryPage.checkProductsSortedCorrectly('lohi');
+    });
+
+    it('should sort products correctly by price High to Low', () => {
+        inventoryPage.sortProductsBy('hilo');
+        inventoryPage.checkProductsSortedCorrectly('hilo');
+    });
 });

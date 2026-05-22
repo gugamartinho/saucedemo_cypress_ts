@@ -2,6 +2,7 @@ export default class InventoryPage {
     private inventoryItems = '[data-test=inventory-item]';
     private inventoryItemName = '[data-test=inventory-item-name]';
     private inventoryItemPrice = '[data-test=inventory-item-price]';
+    private sortSelect = '[data-test=product-sort-container]';
 
     visit() {
         cy.visit('/inventory.html');
@@ -25,4 +26,45 @@ export default class InventoryPage {
         const product = this.getInventoryItems().eq(index).find(this.inventoryItemPrice);
         product.should('be.visible').and('contain', expectedPrice);
     }
-}           
+
+    sortProductsBy(criteria: 'az' | 'za' | 'lohi' | 'hilo') {
+        if (!criteria) {
+            throw new Error('Sorting criteria is required');
+        }else {
+            cy.get(this.sortSelect).select(criteria);
+        } 
+    }
+    
+    checkProductsSortedCorrectly(criteria: 'az' | 'za' | 'lohi' | 'hilo') {
+        this.getInventoryItems().then(items => {
+            const names = items.map((index, item) => Cypress.$(item).find(this.inventoryItemName).text()).get();
+            const prices = items.map((index, item) => Cypress.$(item).find(this.inventoryItemPrice).text()).get();
+
+            switch (criteria) {
+                case 'az':
+                    // Check if names are sorted A-Z
+                    const sortedNamesAZ = [...names].sort();
+                    expect(names).to.deep.equal(sortedNamesAZ);
+                    break;
+                case 'za':
+                    // Check if names are sorted Z-A
+                    const sortedNamesZA = [...names].sort().reverse();
+                    expect(names).to.deep.equal(sortedNamesZA);
+                    break;
+                case 'lohi':
+                    // Check if prices are sorted Low to High
+                    const sortedPricesLOHI = [...prices].sort((a, b) => parseFloat(a.replace('$', '')) - parseFloat(b.replace('$', '')));
+                    expect(prices).to.deep.equal(sortedPricesLOHI);
+                    break;
+                case 'hilo':
+                    // Check if prices are sorted High to Low
+                    const sortedPricesHILO = [...prices].sort((a, b) => parseFloat(b.replace('$', '')) - parseFloat(a.replace('$', '')));
+                    expect(prices).to.deep.equal(sortedPricesHILO);
+                    break;
+                default:
+                    throw new Error('Invalid sorting criteria');
+            }
+        }); 
+    }
+
+}
