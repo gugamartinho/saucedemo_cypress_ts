@@ -20,7 +20,7 @@ describe('Product Details Tests', () => {
     });
 
     it('should display product details page after clicking a product', () => {
-        inventoryPage.openProductDetailsByIndex(productData.products.index);
+        inventoryPage.openProductDetailsByIndex(productData.products[0].index);
         productDetailsPage.checkProductDetailsPageIsDisplayed();
     });
 
