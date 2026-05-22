@@ -21,6 +21,7 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.1",
     "cypress": "^15.15.0",
+    "dotenv": "^17.4.2",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^4.4.1",
     "mochawesome-report-generator": "^6.3.2",
