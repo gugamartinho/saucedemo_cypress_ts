@@ -4,6 +4,13 @@ import InventoryPage from "../../pages/InventoryPage";
 describe('Inventory Tests', () => {
     const loginPage = new LoginPage();
     const inventoryPage = new InventoryPage();
+    let productData: ProductDetailsFixture;
+
+    before(() => {
+      cy.fixture('productDetails').then((data) => {
+        productData = data;
+      });
+    });
 
     beforeEach(() => {
         loginPage.visit();
@@ -21,21 +28,15 @@ describe('Inventory Tests', () => {
     });
 
     it('listed products should have correct names', () => {
-        inventoryPage.assertProductNameByIndex(0, 'Sauce Labs Backpack');
-        inventoryPage.assertProductNameByIndex(1, 'Sauce Labs Bike Light');
-        inventoryPage.assertProductNameByIndex(2, 'Sauce Labs Bolt T-Shirt');
-        inventoryPage.assertProductNameByIndex(3, 'Sauce Labs Fleece Jacket');
-        inventoryPage.assertProductNameByIndex(4, 'Sauce Labs Onesie');
-        inventoryPage.assertProductNameByIndex(5, 'Test.allTheThings() T-Shirt (Red)');
+        productData.products.forEach((product) => {
+            inventoryPage.assertProductNameByIndex(product.index, product.name); // Use the index from the fixture to assert the name for each product
+        });
     });
 
     it('listed products should have correct prices', () => {
-        inventoryPage.assertProductPriceByIndex(0, '$29.99');
-        inventoryPage.assertProductPriceByIndex(1, '$9.99');
-        inventoryPage.assertProductPriceByIndex(2, '$15.99');
-        inventoryPage.assertProductPriceByIndex(3, '$49.99');
-        inventoryPage.assertProductPriceByIndex(4, '$7.99');
-        inventoryPage.assertProductPriceByIndex(5, '$15.99');
+        productData.products.forEach((product) => {
+            inventoryPage.assertProductPriceByIndex(product.index, product.price); // Use the index from the fixture to assert the price for each product
+        });
     });
 
     it('should sort products correctly by name A-Z', () => {

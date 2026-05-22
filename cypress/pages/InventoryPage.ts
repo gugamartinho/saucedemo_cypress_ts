@@ -1,5 +1,6 @@
 export default class InventoryPage {
     private inventoryItems = '[data-test=inventory-item]';
+    private inventoryItemImgLink = '[data-test*=img-link]';
     private inventoryItemName = '[data-test=inventory-item-name]';
     private inventoryItemPrice = '[data-test=inventory-item-price]';
     private sortSelect = '[data-test=product-sort-container]';
@@ -11,6 +12,14 @@ export default class InventoryPage {
     getInventoryItems() {
         // Return the inventory items as a Cypress chainable for further assertions
         return cy.get(this.inventoryItems);
+    }
+
+    checkInventoryPageIsDisplayed() {
+        cy.url().should('include', '/inventory.html');
+    }
+
+    openProductDetailsByIndex(index: number) {
+        this.getInventoryItems().eq(index).find(this.inventoryItemImgLink).click();
     }
 
     assertNumberOfProductsListed(expectedCount: number) {

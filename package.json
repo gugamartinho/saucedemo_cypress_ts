@@ -10,7 +10,8 @@
     "report:generate": "marge cypress/reports/report.json --reportDir cypress/reports/html",
     "report": "npm run report:merge && npm run report:generate",
     "cy:login": "npm run clean:reports && cypress run --spec 'cypress/e2e/login/*' || true && npm run report",
-    "cy:inventory": "npm run clean:reports && cypress run --spec 'cypress/e2e/inventory/*' || true && npm run report"
+    "cy:inventory": "npm run clean:reports && cypress run --spec 'cypress/e2e/inventory/*' || true && npm run report",
+    "cy:product-details": "npm run clean:reports && cypress run --spec 'cypress/e2e/product-details/*' || true && npm run report"
   },
   "keywords": [],
   "author": "",

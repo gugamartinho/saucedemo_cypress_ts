@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 import LoginPage from "../../pages/LoginPage";
 
 describe('Login Tests', () => {
