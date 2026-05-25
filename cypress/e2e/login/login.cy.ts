@@ -1,7 +1,9 @@
+import BasePage from "../../pages/BasePage";
 import LoginPage from "../../pages/LoginPage";
 
 describe('Login Tests', () => {
     const loginPage = new LoginPage();
+    const basePage = new BasePage();
 
     beforeEach(() => {
         loginPage.visit();

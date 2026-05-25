@@ -1,9 +1,11 @@
 import LoginPage from "../../pages/LoginPage";
 import InventoryPage from "../../pages/InventoryPage";
+import BasePage from "../../pages/BasePage";
 
 describe('Inventory Tests', () => {
     const loginPage = new LoginPage();
     const inventoryPage = new InventoryPage();
+    const basePage = new BasePage();
     let productData: ProductDetailsFixture;
 
     before(() => {
@@ -15,6 +17,10 @@ describe('Inventory Tests', () => {
     beforeEach(() => {
         loginPage.visit();
         loginPage.login(Cypress.env('VALID_USERNAME'), Cypress.env('VALID_PASSWORD'));
+    });
+
+    afterEach(() => {
+        basePage.logout();
     });
 
     it('should display the inventory page after successful login', () => {

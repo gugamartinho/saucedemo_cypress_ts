@@ -1,11 +1,13 @@
 import LoginPage from "../../pages/LoginPage";
 import InventoryPage from "../../pages/InventoryPage";
 import ProductDetailsPage from "../../pages/ProductDetailsPage";
+import BasePage from "../../pages/BasePage";
 
 describe('Product Details Tests', () => {
     const loginPage = new LoginPage();
     const inventoryPage = new InventoryPage();
     const productDetailsPage = new ProductDetailsPage();
+    const basePage = new BasePage();
     let productData: ProductDetailsFixture; // Variable to hold fixture data
 
     before(() => {
@@ -17,6 +19,10 @@ describe('Product Details Tests', () => {
     beforeEach(() => {
         loginPage.visit();
         loginPage.login(Cypress.env('VALID_USERNAME'), Cypress.env('VALID_PASSWORD'));
+    });
+
+    afterEach(() => {
+        basePage.logout();
     });
 
     it('should display product details page after clicking a product', () => {

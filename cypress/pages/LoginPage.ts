@@ -1,9 +1,11 @@
 export default class LoginPage {
+    //selectors
     private usernameInput = '[data-test=username]';
     private passwordInput = '[data-test=password]';
     private loginButton = '[data-test=login-button]';
     private errorMessage = '[data-test=error]';
 
+    //actions
     visit() {
         cy.visit('/');
     }
@@ -22,14 +24,15 @@ export default class LoginPage {
         cy.get(this.loginButton).click();
     }
 
-    assertErrorMessage(expectedMessage: string) {
-        cy.get(this.errorMessage).should('be.visible').and('contain', expectedMessage);
-    }
-
     // Convenience method to perform the entire login process
     login(username: string, password: string) {
         this.typeUsername(username);
         this.typePassword(password);
         this.clickLogin();
+    }
+
+    //assertions
+    assertErrorMessage(expectedMessage: string) {
+        cy.get(this.errorMessage).should('be.visible').and('contain', expectedMessage);
     }
 }

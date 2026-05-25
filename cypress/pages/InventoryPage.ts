@@ -1,10 +1,12 @@
 export default class InventoryPage {
+    //selectors
     private inventoryItems = '[data-test=inventory-item]';
     private inventoryItemImgLink = '[data-test*=img-link]';
     private inventoryItemName = '[data-test=inventory-item-name]';
     private inventoryItemPrice = '[data-test=inventory-item-price]';
     private sortSelect = '[data-test=product-sort-container]';
 
+    //actions
     visit() {
         cy.visit('/inventory.html');
     }
@@ -14,12 +16,25 @@ export default class InventoryPage {
         return cy.get(this.inventoryItems);
     }
 
-    checkInventoryPageIsDisplayed() {
-        cy.url().should('include', '/inventory.html');
-    }
-
     openProductDetailsByIndex(index: number) {
         this.getInventoryItems().eq(index).find(this.inventoryItemImgLink).click();
+    }
+
+    addProductToCartByIndex(index: number) {
+        this.getInventoryItems().eq(index).find('button').click();
+    }
+
+    sortProductsBy(criteria: 'az' | 'za' | 'lohi' | 'hilo') {
+        if (!criteria) {
+            throw new Error('Sorting criteria is required');
+        }else {
+            cy.get(this.sortSelect).select(criteria);
+        } 
+    }
+
+    //assertions
+    checkInventoryPageIsDisplayed() {
+        cy.url().should('include', '/inventory.html');
     }
 
     assertNumberOfProductsListed(expectedCount: number) {
@@ -34,14 +49,6 @@ export default class InventoryPage {
     assertProductPriceByIndex(index: number, expectedPrice: string) {
         const product = this.getInventoryItems().eq(index).find(this.inventoryItemPrice);
         product.should('be.visible').and('contain', expectedPrice);
-    }
-
-    sortProductsBy(criteria: 'az' | 'za' | 'lohi' | 'hilo') {
-        if (!criteria) {
-            throw new Error('Sorting criteria is required');
-        }else {
-            cy.get(this.sortSelect).select(criteria);
-        } 
     }
     
     checkProductsSortedCorrectly(criteria: 'az' | 'za' | 'lohi' | 'hilo') {
