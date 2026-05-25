@@ -5,7 +5,6 @@ import BasePage from "../../pages/BasePage";
 import CheckOutOnePage from "../../pages/CheckOutOnePage";
 import CheckOutTwoPage from "../../pages/CheckOutTwoPage";
 import CheckOutComplete from "../../pages/CheckOutComplete";
-import { CheckoutData } from "../../types/checkoutData";
 
 describe('Purchase Flow', () => {
     // Page Object instances
@@ -19,7 +18,8 @@ describe('Purchase Flow', () => {
     // Variables to hold fixture data
     let productData: ProductDetailsFixture; // Variable to hold fixture data
     let clientData: ClientDetailsFixture; // Variable to hold client fixture data
-    let checkoutData: CheckoutData; // Variable to hold checkout fixture data
+    let shippingData: ShippingFixture; // Variable to hold shipping fixture data
+    let messagesData: MessagesFixture; // Variable to hold messages fixture data
 
     before(() => {
         cy.fixture('productDetails').then((data) => {
@@ -28,8 +28,11 @@ describe('Purchase Flow', () => {
         cy.fixture('clientDetails').then((data) => {
             clientData = data;
         });
-        cy.fixture('checkoutData').then((data) => {
-            checkoutData = data;
+        cy.fixture('shipping').then((data) => {
+            shippingData = data;
+        });
+        cy.fixture('messages').then((data) => {
+            messagesData = data;
         });
     });
     
@@ -49,7 +52,7 @@ describe('Purchase Flow', () => {
         checkoutOnePage.fillCheckoutInformation(clientData.clients[0].firstName, clientData.clients[0].lastName, clientData.clients[0].postalCode);
         checkoutOnePage.clickContinueButton();
         checkoutTwoPage.clickFinishButton();
-        checkoutCompletePage.checkCompleteHeader(checkoutData.messages.successHeader);
+        checkoutCompletePage.checkCompleteHeader(messagesData.messages.successHeader);
     });
 
     it('checkout product and verify details', () => {
@@ -61,14 +64,14 @@ describe('Purchase Flow', () => {
         checkoutTwoPage.checkProductName(productData.products[0].name);
         checkoutTwoPage.checkProductDescription(productData.products[0].name, productData.products[0].description);
         checkoutTwoPage.checkProductPrice(productData.products[0].name, productData.products[0].price);
-        checkoutTwoPage.checkPaymentInformation(checkoutData.payment.expectedText);
-        checkoutTwoPage.checkShippingInformation(checkoutData.shipping.expectedText);
+        checkoutTwoPage.checkPaymentInformation(clientData.clients[0].CardNumber);
+        checkoutTwoPage.checkShippingInformation(shippingData.shipping.method);
         checkoutTwoPage.checkItemTotal(productData.products[0].price);
         checkoutTwoPage.checkTax(productData.products[0].tax);
         checkoutTwoPage.checkTotal(productData.products[0].total);
         checkoutTwoPage.clickFinishButton();
-        checkoutCompletePage.checkCompleteHeader(checkoutData.messages.successHeader);
-        checkoutCompletePage.checkCompleteText(checkoutData.messages.successText);
+        checkoutCompletePage.checkCompleteHeader(messagesData.messages.successHeader);
+        checkoutCompletePage.checkCompleteText(messagesData.messages.successText);
     });
 
 });

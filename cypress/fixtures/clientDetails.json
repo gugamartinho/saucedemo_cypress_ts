@@ -3,7 +3,8 @@
     {
       "firstName": "John",
       "lastName": "Doe",
-      "postalCode": "12345"
+      "postalCode": "12345",
+      "CardNumber": "#31337"
     }
   ]
 }
